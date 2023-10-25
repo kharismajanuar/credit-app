@@ -15,7 +15,7 @@ This app is for skill technical test purposes. The Credit App is an API for mana
 | [fiber](https://github.com/gofiber/fiber)                              | Fiber is an Express inspired web framework built on top of Fasthttp, the fastest HTTP engine for Go.        |
 | [godotenv](https://github.com/joho/godotenv)                           | A Go (golang) port of the Ruby dotenv project (which loads env vars from a .env file).                      |
 | [sqlx](https://github.com/jmoiron/sqlx)                                | sqlx is a library which provides a set of extensions on go's standard database/sql library.                 |
-| [pq](https://github.com/lib/pq)                                        | pq - A pure Go postgres driver for Go's database/sql package                                                | 
+| [pq](https://github.com/lib/pq)                                        | pq - A pure Go postgres driver for Go's database/sql package.                                               | 
 | [jwt](https://github.com/golang-jwt/jwt)                               | A go (or 'golang' for search engine friendliness) implementation of JSON Web Tokens.                        |    
 | [bcrypt](https://cs.opensource.google/go/x/crypto)                     | Package bcrypt implements Provos and Mazières's bcrypt adaptive hashing algorithm.                          |
 | [swag](https://github.com/swaggo/swag#swag)                            | Swag converts Go annotations to Swagger Documentation 2.0.                                                  |
@@ -42,7 +42,21 @@ $ git clone git@github.com:kharismajanuar/credit-app.git
 $ cd credit-app
 ```
 
-- Modify the env.example file with your environment
+- Modify the `env.example` file with your environment
+
+```
+DB_USERNAME = kharismajanuar
+DB_NAME = credit_app
+DB_PASSWORD = 1234
+DB_PORT = 5432
+DB_HOST = localhost
+DB_TIMEZONE = Asia/Jakarta
+
+APP_PORT = 3003
+APP_NAME = credit-app
+
+JWT_SECRET = secret
+```
 
 - Run the application
 
