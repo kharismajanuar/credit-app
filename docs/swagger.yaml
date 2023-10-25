@@ -1,0 +1,616 @@
+definitions:
+  Response:
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  ResponseError:
+    properties:
+      message: {}
+      status:
+        type: string
+    type: object
+  http.DetailUserFormatter:
+    properties:
+      address:
+        type: string
+      date_of_birth:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      phone_number:
+        type: string
+      role:
+        type: string
+    type: object
+  http.ListCreditFormatter:
+    properties:
+      credit_type:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      status:
+        type: string
+      tenor:
+        type: string
+      total_credit:
+        type: number
+      total_transaction:
+        type: number
+      user_id:
+        type: integer
+    type: object
+  http.ListPaymentFormatter:
+    properties:
+      amount:
+        type: number
+      credit_id:
+        type: integer
+      id:
+        type: integer
+      status:
+        type: string
+    type: object
+  http.ListUserFormatter:
+    properties:
+      address:
+        type: string
+      date_of_birth:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      phone_number:
+        type: string
+      role:
+        type: string
+    type: object
+  http.LoginFormatter:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      role:
+        type: string
+      token:
+        type: string
+    type: object
+  model.CreateCreditRequest:
+    properties:
+      name:
+        example: Kredit Cicilan KPR
+        type: string
+      tenor:
+        example: 6 bulan
+        type: string
+      total_credit:
+        example: 100000000
+        type: number
+    required:
+    - name
+    - tenor
+    - total_credit
+    type: object
+  model.CreatePaymentRequest:
+    properties:
+      amount:
+        example: 1000000
+        type: number
+    required:
+    - amount
+    type: object
+  model.LoginRequest:
+    properties:
+      email:
+        example: kharisma.januar@gmail.com
+        type: string
+      password:
+        example: password
+        minLength: 8
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  model.RegisterRequest:
+    properties:
+      email:
+        example: kharisma.januar@gmail.com
+        type: string
+      first_name:
+        example: Kharisma
+        type: string
+      last_name:
+        example: Januar
+        type: string
+      password:
+        example: password
+        minLength: 8
+        type: string
+      phone_number:
+        example: "08123456789"
+        minLength: 10
+        type: string
+      role:
+        enum:
+        - admin
+        - manager
+        - user
+        example: user
+        type: string
+    required:
+    - email
+    - first_name
+    - password
+    - phone_number
+    - role
+    type: object
+  model.UpdateStatusCreditRequest:
+    properties:
+      status:
+        enum:
+        - waiting
+        - processed
+        - ongoing
+        - done
+        example: processed
+        type: string
+    required:
+    - status
+    type: object
+  model.UpdateStatusPaymentRequest:
+    properties:
+      status:
+        enum:
+        - success
+        - failed
+        example: success
+        type: string
+    required:
+    - status
+    type: object
+  model.UpdateUserRequest:
+    properties:
+      address:
+        example: Kp Jatilarangan
+        type: string
+      date_of_birth:
+        example: 13/01/1998
+        type: string
+      email:
+        example: kharisma.januar@gmail.com
+        type: string
+      first_name:
+        example: Kharisma
+        type: string
+      gender:
+        enum:
+        - male
+        - female
+        example: male
+        type: string
+      last_name:
+        example: Januar
+        type: string
+      password:
+        example: password
+        minLength: 8
+        type: string
+      phone_number:
+        example: "08123456789"
+        minLength: 10
+        type: string
+      role:
+        enum:
+        - admin
+        - manager
+        - user
+        example: user
+        type: string
+    required:
+    - email
+    - first_name
+    - password
+    - phone_number
+    - role
+    type: object
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Credit App Swagger API Documentation
+  version: "2.0"
+paths:
+  /credits:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create Credit Request
+        in: body
+        name: CreateCreditRequest
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateCreditRequest'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: Response Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "201":
+          description: Response Success
+          schema:
+            $ref: '#/definitions/Response'
+      security:
+      - Bearer: []
+      summary: Create Credit
+      tags:
+      - Credit
+  /credits/{credit_id}:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update Status Credit Request ID
+        in: path
+        name: credit_id
+        required: true
+        type: integer
+      - description: Update Status Credit Request
+        in: body
+        name: UpdateStatusCreditRequest
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateStatusCreditRequest'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: Response Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "200":
+          description: Response Success
+          schema:
+            $ref: '#/definitions/Response'
+      security:
+      - Bearer: []
+      summary: Update Status Credit
+      tags:
+      - Credit
+  /credits/{credit_id}/payments:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Get List Payment Request ID
+        in: path
+        name: credit_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: Response Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "200":
+          description: Response Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/http.ListPaymentFormatter'
+                  type: array
+              type: object
+      security:
+      - Bearer: []
+      summary: Get List Payment
+      tags:
+      - Credit
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create Payment Request ID
+        in: path
+        name: credit_id
+        required: true
+        type: integer
+      - description: Credit Payment Request
+        in: body
+        name: CreatePaymentRequest
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreatePaymentRequest'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: Response Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "201":
+          description: Response Success
+          schema:
+            $ref: '#/definitions/Response'
+      security:
+      - Bearer: []
+      summary: Create Payment
+      tags:
+      - Credit
+  /credits/{user_id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Get List Credit Request ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: Response Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "200":
+          description: Response Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/http.ListCreditFormatter'
+                  type: array
+              type: object
+      security:
+      - Bearer: []
+      summary: Get List Credit
+      tags:
+      - Credit
+  /login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Login Request
+        in: body
+        name: LoginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/model.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: Response Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "201":
+          description: Response Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/http.LoginFormatter'
+              type: object
+      summary: Login
+      tags:
+      - Auth
+  /payments/{payment_id}:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update Status Payment Request ID
+        in: path
+        name: payment_id
+        required: true
+        type: integer
+      - description: Update Status Payment Request
+        in: body
+        name: UpdateStatusPaymentRequest
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateStatusPaymentRequest'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: Response Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "200":
+          description: Response Success
+          schema:
+            $ref: '#/definitions/Response'
+      security:
+      - Bearer: []
+      summary: Update Status Payment
+      tags:
+      - Credit
+  /register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Register Request
+        in: body
+        name: RegisterRequest
+        required: true
+        schema:
+          $ref: '#/definitions/model.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: Response Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "201":
+          description: Response Success
+          schema:
+            $ref: '#/definitions/Response'
+      summary: Register
+      tags:
+      - Auth
+  /users:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: Response Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "201":
+          description: Response Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/http.ListUserFormatter'
+                  type: array
+              type: object
+      security:
+      - Bearer: []
+      summary: Get List User
+      tags:
+      - User
+  /users/{user_id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Delete User Request ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: Response Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "200":
+          description: Response Success
+          schema:
+            $ref: '#/definitions/Response'
+      security:
+      - Bearer: []
+      summary: Delete User
+      tags:
+      - User
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Get Detail User Request
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: Response Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "201":
+          description: Response Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/http.DetailUserFormatter'
+              type: object
+      security:
+      - Bearer: []
+      summary: Get Detail User
+      tags:
+      - User
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update User Request ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      - description: Update User Request Body
+        in: body
+        name: UpdateUserRequest
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: Response Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "200":
+          description: Response Success
+          schema:
+            $ref: '#/definitions/Response'
+      security:
+      - Bearer: []
+      summary: Update User
+      tags:
+      - User
+schemes:
+- http
+securityDefinitions:
+  Bearer:
+    description: 'Type "Bearer" followed by a space and JWT token. Example: "Bearer
+      eyJhbGciOi..."'
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
