@@ -5,7 +5,7 @@ This app is for skill technical test purposes. The Credit App is an API for mana
 # This app has implemented:
 
 - Use prepared statement in every query execution to prevent SQL Injection.
-- Validate every request client to prevent XSS (Cross-Site Scripting) attacks.
+- Validate every request from client to prevent XSS (Cross-Site Scripting) attacks.
 - Implementation of Clean Architecture for scalability and independence of frameworks. Which is this project has 4 layers: Domain, Service, Repository, and Handler.
 
 # Dependencies
